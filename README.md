@@ -112,7 +112,7 @@
         **"Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan.**
         **"Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.**
 
-        Untuk memunculkan Snackbar dengan pesan yang berbeda sesuai dengan tombol yang ditekan, saya menggunakan InkWell untuk memberikan efek interaktif pada setiap tombol. Saat tombol ditekan, ScaffoldMessenger akan digunakan untuk menampilkan Snackbar dengan pesan yang menyesuaikan nama tombol yang ditekan:
+        Untuk memunculkan *Snackbar* dengan pesan yang berbeda sesuai dengan tombol yang ditekan, saya menggunakan `InkWell` untuk memberikan efek interaktif pada setiap tombol. Saat tombol ditekan, `ScaffoldMessenger` akan digunakan untuk menampilkan `Snackbar` dengan pesan yang menyesuaikan nama tombol yang ditekan:
 
         "Kamu telah menekan tombol Lihat Daftar Produk" saat tombol Lihat Daftar Produk ditekan.
         "Kamu telah menekan tombol Tambah Produk" saat tombol Tambah Produk ditekan.
@@ -131,7 +131,7 @@
             );
         },
         ```
-        Dengan InkWell, efek interaktif ditambahkan pada setiap tombol, dan ScaffoldMessenger secara dinamis menampilkan Snackbar sesuai dengan tombol yang ditekan, menggunakan item.name untuk mengisi teks pesan. Menambahkan ScaffoldMessenger.of(context).hideCurrentSnackBar() memastikan bahwa Snackbar sebelumnya disembunyikan sebelum yang baru muncul, sehingga hanya satu Snackbar yang tampil pada satu waktu, menciptakan pengalaman pengguna yang lebih rapi.
+        Dengan `InkWell`, efek interaktif ditambahkan pada setiap tombol, dan `ScaffoldMessenger` secara dinamis menampilkan `Snackbar` sesuai dengan tombol yang ditekan, menggunakan `item.name` untuk mengisi teks pesan. Menambahkan `ScaffoldMessenger.of(context).hideCurrentSnackBar()` memastikan bahwa `Snackbar` sebelumnya disembunyikan sebelum yang baru muncul, sehingga hanya satu `Snackbar` yang tampil pada satu waktu, menciptakan pengalaman pengguna yang lebih rapi.
 
 
 
