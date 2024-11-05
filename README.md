@@ -64,8 +64,11 @@
             Saya membuat *widget InfoCard* di `menu.dart` untuk menampilkan informasi pengguna seperti `NPM`, `nama`, dan `kelas` secara horizontal. *InfoCard* adalah *widget* tipe `StatelessWidget` yang menerima dua parameter, yaitu `title` dan `content`, yang akan ditampilkan di dalam *card*. *Card* ini dibuat tanpa efek bayangan untuk tampilan yang lebih sederhana. Di dalamnya, saya menyusun teks *title* dengan gaya tebal di bagian atas, diikuti oleh *content* sebagai isi *card*. Setiap *InfoCard* ditampilkan dalam sebuah *Row*, sehingga informasi pengguna dapat dilihat secara horizontal di layar.
 
     2. Membuat tiga tombol sederhana dengan ikon dan teks untuk:
+        
         a. Melihat daftar produk (Lihat Daftar Produk)
+        
         b. Menambah produk (Tambah Produk)
+        
         c. Logout (Logout)
 
         Saya membuat tiga tombol dengan nama dan ikon berbeda sesuai dengan fungsinya:
@@ -86,6 +89,7 @@
         Untuk menampilkan ketiga tombol ini dalam bentuk *grid* di `MyHomePage`, saya menggunakan `GridView.count`, yang mengatur tombol-tombol tersebut dalam tiga kolom. Pengaturan `crossAxisCount: 3` memastikan *grid* memiliki tiga kolom, sehingga tombol-tombol tersusun secara horizontal. Dengan `items.map((item) => ItemCard(item)).toList()`, setiap *item* dalam `items` diubah menjadi *widget ItemCard* dan menampilkan ikon dan teks yang sesuai untuk setiap fungsi tombol.
 
     3. Mengimplementasikan warna-warna yang berbeda untuk setiap tombol (`Lihat Daftar Produk`, `Tambah Produk`, dan `Logout`).
+        
         Selanjutnya, setelah membuat *ItemCard* sebagai *widget* yang menampilkan tombol dengan ikon dan teks, saya menerapkan warna-warna yang berbeda untuk setiap tombol (`Lihat Daftar Produk`, `Tambah Produk`, dan `Logout`). Warna ini diterapkan menggunakan *gradient background* yang memberikan tampilan visual yang lebih menarik dan memudahkan pengguna untuk membedakan setiap fungsi tombol. Berikut adalah penjelasan yang terdapat di dalam *ItemCard*:
 
         `gradientColors` digunakan sebagai *Map* Lokal yang didefinisikan di dalam `build` *method*, sehingga hanya digunakan dalam lingkup lokal *ItemCard* saja. Setiap nama tombol, seperti `Lihat Daftar Produk`, `Tambah Produk`, atau `Logout` memiliki warna gradasi khusus yang ditentukan dalam *Map* ini.
@@ -100,6 +104,7 @@
         Karena `gradientColors` hanya berlaku di dalam `build` *method*, skema warna ini digunakan saat *widget ItemCard* dibangun dan tidak dapat diakses dari luar. Warna gradasi ini diterapkan pada `Container` di dalam *ItemCard*.
 
         Selanjutnya, di dalam `Container`, `BoxDecoration` menggunakan `gradientColors` untuk menampilkan warna gradasi berdasarkan nama tombol. Jika nama tombol tidak ada dalam Map, warna abu-abu akan digunakan sebagai *default*.
+        
         ```dart
         decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -113,9 +118,9 @@
         Dengan `gradientColors` sebagai variabel lokal, perubahan warna tombol dapat dilakukan langsung di *ItemCard* tanpa memengaruhi bagian lain dari kode.
 
     4. Memunculkan `Snackbar` dengan tulisan:
-        **"Kamu telah menekan tombol Lihat Daftar Produk" ketika tombol Lihat Daftar Produk ditekan.**
-        **"Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan.**
-        **"Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.**
+        - **"Kamu telah menekan tombol Lihat Daftar Produk" ketika tombol Lihat Daftar Produk ditekan.**
+        - **"Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan.**
+        - **"Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.**
 
         Untuk memunculkan *Snackbar* dengan pesan yang berbeda sesuai dengan tombol yang ditekan, saya menggunakan `InkWell` untuk memberikan efek interaktif pada setiap tombol. Saat tombol ditekan, `ScaffoldMessenger` akan digunakan untuk menampilkan `Snackbar` dengan pesan yang menyesuaikan nama tombol yang ditekan:
 
