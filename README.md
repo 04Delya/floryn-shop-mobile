@@ -7,9 +7,11 @@
 ## TUGAS 7
 
 - Jelaskan apa yang dimaksud dengan *stateless widget* dan *stateful widget*, dan jelaskan perbedaan dari keduanya.
+
     *Stateless widget* adalah *widget* yang bersifat statis, di mana seluruh konfigurasi di dalamnya sudah diinisiasi sejak awal melalui proses *constructor* dan *build*, sehingga tampilannya tidak akan berubah selama aplikasi berjalan, baik karena interaksi pengguna maupun perubahan variabel dan nilai. Sebaliknya, *stateful widget* memiliki sifat dinamis yang memungkinkan tampilan diperbarui kapan pun dibutuhkan melalui proses serupa, yaitu *constructor* untuk inisiasi awal, dan *build* untuk membangun UI berdasarkan kondisi *state*. Perbedaan ini menjadikan *stateless widget* cocok untuk UI yang tetap, sementara *stateful widget* lebih sesuai untuk elemen interaktif yang memerlukan pembaruan secara *real-time*.
 
 - Sebutkan *widget* apa saja yang kamu gunakan pada proyek ini dan jelaskan fungsinya.
+
     1) ***MaterialApp*** berfungsi sebagai *Widget* utama aplikasi yang mengatur tema, *title*, dan *routing* aplikasi.
     2) ***Scaffold*** berfungsi sebagai struktur dasar halaman yang memberikan kerangka untuk*AppBar*, *Body*, dan elemen-elemen lainnya.
     3) ***AppBar*** berfungsi untuk menampilkan bagian atas halaman yang berfungsi sebagai *bar* judul aplikasi.
@@ -28,9 +30,11 @@
     16) ***SnackBar*** berfungsi untuk menampilkan pesan singkat di bagian bawah layar setelah tindakan dilakukan, pada proyek ini contohnya ketika tombol ditekan.
 
 - Apa fungsi dari `setState()`? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.
+
     Fungsi `setState()` di Flutter digunakan untuk memberi tahu *framework* bahwa ada perubahan pada status *widget* yang memerlukan pembaruan tampilan. Saat dipanggil, `setState()` akan membuat ulang atau *rebuild* pada *widget* yang terkait sehingga perubahan tersebut terlihat di UI. Misalnya, jika variabel seperti `searching` atau `resBody` mengalami perubahan dan perlu ditampilkan ulang di layar, perubahan tersebut perlu dibungkus dalam `setState()`. Variabel yang tidak langsung memengaruhi tampilan, seperti `user`, tidak memerlukan setState(). Dalam proyek Floryn Shop ini, variabel seperti `items` dalam `MyHomePage`, atau `title` dan `content` dalam *InfoCard*, bersifat statis dan tidak perlu diperbarui. Namun, jika dibuat dinamis (misalnya, `items` bertambah atau `title` dan `content` otomatis diperbarui), `setState()` perlu digunakan untuk memperbarui UI sesuai perubahan. Penggunaan `setState()` yang selektif dianjurkan untuk menjaga performa aplikasi tetap optimal.
 
 - Jelaskan perbedaan antara `const` dengan `final`.
+
     Dalam Dart, `const` dan `final` digunakan untuk membuat variabel yang nilainya tidak bisa diubah (*immutable*).
 
     - `const` digunakan ketika nilai yang sudah ditetapkan sejak awal dan tidak akan berubah. Contohnya, `const pi = 3.14;`. Nilai ini sudah diketahui sebelum program berjalan dan bersifat tetap.
@@ -39,6 +43,7 @@
     Jadi, kita dapat menggunakan `const` untuk nilai yang sudah pasti sejak awal, dan `final` jika nilainya diperoleh saat program berjalan, tetapi tetap tidak dapat diubah setelahnya.
 
 - Jelaskan bagaimana cara kamu mengimplementasikan *checklist-checklist* di atas.
+
     1. Membuat sebuah program Flutter baru dengan tema *E-Commerce* yang sesuai dengan tugas-tugas sebelumnya.
         - Memulai Proyek Flutter Baru untuk Floryn Shop
             Pertama, saya membuka Terminal (untuk macOS) dan membuat direktori baru untuk menyimpan proyek Flutter bernama `floryn_shop`. Saya menavigasi ke direktori tersebut, lalu membuat proyek baru menggunakan perintah `flutter create floryn_shop` dan `cd floryn_shop`. Setelah proyek berhasil dibuat, saya memastikan proyek dapat berjalan dengan baik dengan menjalankan perintah `flutter run`. Dengan perintah `flutter run` memungkinkan saya untuk memverifikasi bahwa proyek Flutter telah dibuat dan berjalan tanpa masalah. Jika berhasil, proyek akan berjalan dengan tampilan *default* Flutter.
@@ -132,16 +137,3 @@
         },
         ```
         Dengan `InkWell`, efek interaktif ditambahkan pada setiap tombol, dan `ScaffoldMessenger` secara dinamis menampilkan `Snackbar` sesuai dengan tombol yang ditekan, menggunakan `item.name` untuk mengisi teks pesan. Menambahkan `ScaffoldMessenger.of(context).hideCurrentSnackBar()` memastikan bahwa `Snackbar` sebelumnya disembunyikan sebelum yang baru muncul, sehingga hanya satu `Snackbar` yang tampil pada satu waktu, menciptakan pengalaman pengguna yang lebih rapi.
-
-
-
-
-
-
-        
-
-
-
-
-        
-
