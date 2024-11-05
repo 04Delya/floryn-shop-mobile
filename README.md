@@ -39,5 +39,109 @@
     Jadi, kita dapat menggunakan `const` untuk nilai yang sudah pasti sejak awal, dan `final` jika nilainya diperoleh saat program berjalan, tetapi tetap tidak dapat diubah setelahnya.
 
 - Jelaskan bagaimana cara kamu mengimplementasikan *checklist-checklist* di atas.
-    1. 
+    1. Membuat sebuah program Flutter baru dengan tema *E-Commerce* yang sesuai dengan tugas-tugas sebelumnya.
+        - Memulai Proyek Flutter Baru untuk Floryn Shop
+            Pertama, saya membuka Terminal (untuk macOS) dan membuat direktori baru untuk menyimpan proyek Flutter bernama `floryn_shop`. Saya menavigasi ke direktori tersebut, lalu membuat proyek baru menggunakan perintah `flutter create floryn_shop` dan `cd floryn_shop`. Setelah proyek berhasil dibuat, saya memastikan proyek dapat berjalan dengan baik dengan menjalankan perintah `flutter run`. Dengan perintah `flutter run` memungkinkan saya untuk memverifikasi bahwa proyek Flutter telah dibuat dan berjalan tanpa masalah. Jika berhasil, proyek akan berjalan dengan tampilan *default* Flutter.
+        - Mengaktifkan Dukungan Web untuk Proyek
+            Untuk menjalankan aplikasi Flutter langsung di Google Chrome, pilih `opsi [2] Chrome (chrome)` saat *prompt* muncul dan cukup mengetikkan 2 lalu tekan Enter. Namun, jika kita ingin menjalankan proyek di Chrome tanpa *prompt* pemilihan perangkat, jalankan perintah `flutter run -d chrome`. Perintah tersebut akan langsung mengarahkan aplikasi ke Chrome tanpa meminta pilihan perangkat.
+        - Merapikan Struktur Proyek dengan Memindahkan Kode ke `menu.dart`
+            Untuk merapikan struktur proyek, saya membuat *file* baru bernama `menu.dart` di dalam direktori `lib`. File ini berfungsi sebagai tempat baru untuk beberapa kode dari `main.dart`, agar struktur proyek lebih rapi dan mudah dipahami. Pada baris pertama `menu.dart`, saya menambahkan `import 'package:flutter/material.dart';` untuk memungkinkan *file* ini menggunakan komponen dan *widget* dari Flutter, seperti *Scaffold*, *AppBar*, dan lainnya. Selanjutnya, saya membuka `main.dart` dan memindahkan (cut) kode mulai dari baris ke-39 hingga akhir, yang berisi *class* `MyHomePage` dan `_MyHomePageState`, ke `menu.dart`. Dengan memisahkan *class* ini, struktur proyek menjadi lebih modular. Kemudian, di `main.dart`, saya menambahkan `import 'package:floryn_shop/menu.dart';` di bagian atas *file* agar `main.dart` dapat mengenali *class* yang sudah dipindahkan ke `menu.dart`. Terakhir, saya menjalankan proyek dari Terminal untuk memastikan aplikasi berjalan dengan baik dan semua perubahan telah diterapkan tanpa *error*.
+        - Mengubah Tema Warna Aplikasi
+            Saya mengubah tema aplikasi agar sesuai dengan identitas Floryn Shop. Di `main.dart`, saya mengatur skema warna aplikasi dengan menggunakan `ColorScheme.fromSwatch` yang saya ubah menjadi pink:
+            ```dart
+            colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: Colors.pink,
+            ).copyWith(secondary: Colors.pink[200]),
+            ```
+        - Mengubah *Class* `MyHomePage` Menjadi *Stateless*
+            Di dalam berkas `main.dart`, saya menghapus `const MyHomePage(title: 'Flutter Demo Home Page')` dan menggantinya dengan `MyHomePage()`, sekaligus menghilangkan kata kunci `const`. Selain itu, saya mengubah *class* `MyHomePage` dari `StatefulWidget` menjadi `StatelessWidget` di `menu.dart`, dengan membersihkan semua kode yang berkaitan dengan *state management*.
+        - Membuat *InfoCard* untuk Menampilkan Informasi Pengguna
+            Saya membuat *widget InfoCard* di `menu.dart` untuk menampilkan informasi pengguna seperti `NPM`, `nama`, dan `kelas` secara horizontal. *InfoCard* adalah *widget* tipe `StatelessWidget` yang menerima dua parameter, yaitu `title` dan `content`, yang akan ditampilkan di dalam *card*. *Card* ini dibuat tanpa efek bayangan untuk tampilan yang lebih sederhana. Di dalamnya, saya menyusun teks *title* dengan gaya tebal di bagian atas, diikuti oleh *content* sebagai isi *card*. Setiap *InfoCard* ditampilkan dalam sebuah *Row*, sehingga informasi pengguna dapat dilihat secara horizontal di layar.
+
+    2. Membuat tiga tombol sederhana dengan ikon dan teks untuk:
+        a. Melihat daftar produk (Lihat Daftar Produk)
+        b. Menambah produk (Tambah Produk)
+        c. Logout (Logout)
+
+        Saya membuat tiga tombol dengan nama dan ikon berbeda sesuai dengan fungsinya:
+        - **Lihat Daftar Produk**: Tombol ini menampilkan ikon `production_quantity_limits_sharp` untuk melihat daftar produk yang tersedia.
+        - **Tambah Produk**: Tombol ini menampilkan ikon `add` untuk menambahkan produk baru.
+        - **Logout**: Tombol ini menampilkan ikon `logout` untuk keluar dari aplikasi.
+
+        Setiap tombol diatur menggunakan *class* `ItemHomepage`, yang menyimpan informasi `name` dan `icon` dari setiap tombol, seperti berikut:
+        ```dart
+        final List<ItemHomepage> items = [
+            ItemHomepage("Lihat Daftar Produk", Icons.production_quantity_limits_sharp),
+            ItemHomepage("Tambah Produk", Icons.add),
+            ItemHomepage("Logout", Icons.logout),
+        ];
+        ```
+        Selanjutnya, saya membuat *widget ItemCard* yang akan menampilkan setiap tombol dalam format *card* berisi ikon dan teks. *Widget ItemCard* membungkus kontennya dengan `Material` dan `InkWell`, yang memberikan efek interaktif ketika tombol ditekan. Di dalamnya terdapat `Container` untuk mengatur *padding* di sekitar ikon dan teks agar terlihat lebih rapi. Konten tombol ditampilkan dalam `Column`, di mana ikon berada di bagian atas dan teks di bawahnya, tersusun secara vertikal.
+
+        Untuk menampilkan ketiga tombol ini dalam bentuk *grid* di `MyHomePage`, saya menggunakan `GridView.count`, yang mengatur tombol-tombol tersebut dalam tiga kolom. Pengaturan `crossAxisCount: 3` memastikan *grid* memiliki tiga kolom, sehingga tombol-tombol tersusun secara horizontal. Dengan `items.map((item) => ItemCard(item)).toList()`, setiap *item* dalam `items` diubah menjadi *widget ItemCard* dan menampilkan ikon dan teks yang sesuai untuk setiap fungsi tombol.
+
+    3. Mengimplementasikan warna-warna yang berbeda untuk setiap tombol (`Lihat Daftar Produk`, `Tambah Produk`, dan `Logout`).
+        Selanjutnya, setelah membuat *ItemCard* sebagai *widget* yang menampilkan tombol dengan ikon dan teks, saya menerapkan warna-warna yang berbeda untuk setiap tombol (`Lihat Daftar Produk`, `Tambah Produk`, dan `Logout`). Warna ini diterapkan menggunakan *gradient background* yang memberikan tampilan visual yang lebih menarik dan memudahkan pengguna untuk membedakan setiap fungsi tombol. Berikut adalah penjelasan yang terdapat di dalam *ItemCard*:
+
+        `gradientColors` digunakan sebagai *Map* Lokal yang didefinisikan di dalam `build` *method*, sehingga hanya digunakan dalam lingkup lokal *ItemCard* saja. Setiap nama tombol, seperti `Lihat Daftar Produk`, `Tambah Produk`, atau `Logout` memiliki warna gradasi khusus yang ditentukan dalam *Map* ini.
+
+        ```dart
+        final gradientColors = { 
+        "Lihat Daftar Produk": [Colors.pink, const Color.fromARGB(255, 246, 150, 255)],
+        "Tambah Produk": [Colors.pink, const Color.fromARGB(255, 255, 150, 150)],
+        "Logout": [Colors.blue, const Color.fromARGB(255, 49, 21, 143)],
+        };
+        ```
+        Karena `gradientColors` hanya berlaku di dalam `build` *method*, skema warna ini digunakan saat *widget ItemCard* dibangun dan tidak dapat diakses dari luar. Warna gradasi ini diterapkan pada `Container` di dalam *ItemCard*.
+
+        Selanjutnya, di dalam `Container`, `BoxDecoration` menggunakan `gradientColors` untuk menampilkan warna gradasi berdasarkan nama tombol. Jika nama tombol tidak ada dalam Map, warna abu-abu akan digunakan sebagai *default*.
+        ```dart
+        decoration: BoxDecoration(
+        gradient: LinearGradient(
+            colors: gradientColors[item.name] ?? [Colors.grey, Colors.grey],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(12),
+        ),
+        ```
+        Dengan `gradientColors` sebagai variabel lokal, perubahan warna tombol dapat dilakukan langsung di *ItemCard* tanpa memengaruhi bagian lain dari kode.
+
+    4. Memunculkan `Snackbar` dengan tulisan:
+        **"Kamu telah menekan tombol Lihat Daftar Produk" ketika tombol Lihat Daftar Produk ditekan.**
+        **"Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan.**
+        **"Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.**
+
+        Untuk memunculkan Snackbar dengan pesan yang berbeda sesuai dengan tombol yang ditekan, saya menggunakan InkWell untuk memberikan efek interaktif pada setiap tombol. Saat tombol ditekan, ScaffoldMessenger akan digunakan untuk menampilkan Snackbar dengan pesan yang menyesuaikan nama tombol yang ditekan:
+
+        "Kamu telah menekan tombol Lihat Daftar Produk" saat tombol Lihat Daftar Produk ditekan.
+        "Kamu telah menekan tombol Tambah Produk" saat tombol Tambah Produk ditekan.
+        "Kamu telah menekan tombol Logout" saat tombol Logout ditekan.
+        Berikut implementasinya:
+
+        ```dart
+        onTap: () {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text("Kamu telah menekan tombol ${item.name}!"),
+                backgroundColor: Colors.pink[200], 
+              ),
+            );
+        },
+        ```
+        Dengan InkWell, efek interaktif ditambahkan pada setiap tombol, dan ScaffoldMessenger secara dinamis menampilkan Snackbar sesuai dengan tombol yang ditekan, menggunakan item.name untuk mengisi teks pesan. Menambahkan ScaffoldMessenger.of(context).hideCurrentSnackBar() memastikan bahwa Snackbar sebelumnya disembunyikan sebelum yang baru muncul, sehingga hanya satu Snackbar yang tampil pada satu waktu, menciptakan pengalaman pengguna yang lebih rapi.
+
+
+
+
+
+
+        
+
+
+
+
+        
 
