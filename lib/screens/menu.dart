@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:floryn_shop/widgets/left_drawer.dart';
+import 'package:floryn_shop/widgets/product_card.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -28,8 +30,12 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
         // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
-        backgroundColor: const Color.fromARGB(255, 232, 150, 179),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        // Mengganti warna icon drawer menjadi putih
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
+      // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
+      drawer: const LeftDrawer(),
       // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -54,7 +60,6 @@ class MyHomePage extends StatelessWidget {
             Center(
               child: Column(
                 // Menyusun teks dan grid item secara vertikal.
-
                 children: [
                   // Menampilkan teks sambutan dengan gaya tebal dan ukuran 18.
                   const Padding(
@@ -119,82 +124,6 @@ class InfoCard extends StatelessWidget {
             const SizedBox(height: 8.0),
             Text(content),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class ItemHomepage {
-    final String name;
-    final IconData icon;
-
-    ItemHomepage(this.name, this.icon);
-}
-
-class ItemCard extends StatelessWidget {
-  // Menampilkan kartu dengan ikon dan nama.
-
-  final ItemHomepage item; 
-  
-  const ItemCard(this.item, {super.key}); 
-
-  @override
-  Widget build(BuildContext context) {
-    final gradientColors = { 
-      "Lihat Daftar Produk": [Colors.pink, const Color.fromARGB(255, 246, 150, 255)],
-      "Tambah Produk": [Colors.pink, const Color.fromARGB(255, 255, 150, 150)],
-      "Logout": [Colors.blue, const Color.fromARGB(255, 49, 21, 143)],
-    };
-    
-    return Material(
-      // Menentukan warna latar belakang dari tema aplikasi.
-      color: Theme.of(context).colorScheme.secondary,
-      // Membuat sudut kartu melengkung.
-      borderRadius: BorderRadius.circular(12),
-      
-      child: InkWell(
-        // Aksi ketika kartu ditekan.
-        onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!"),
-                backgroundColor: Colors.pink[200], 
-              ),
-            );
-        },
-        // Container untuk menyimpan Icon dan Text
-        child: Container(
-           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: gradientColors[item.name] ?? [Colors.grey, Colors.grey], // Warna default jika tidak ditemukan
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              // Menyusun ikon dan teks di tengah kartu.
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

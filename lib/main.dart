@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:floryn_shop/menu.dart';
+import 'package:floryn_shop/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(
               primarySwatch: Colors.pink,
         ).copyWith(secondary: Colors.pink[200]),
-        useMaterial3: true,
       ),
       home: MyHomePage(),
     );

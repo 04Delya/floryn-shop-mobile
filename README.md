@@ -142,3 +142,176 @@
         },
         ```
         Dengan `InkWell`, efek interaktif ditambahkan pada setiap tombol, dan `ScaffoldMessenger` secara dinamis menampilkan `Snackbar` sesuai dengan tombol yang ditekan, menggunakan `item.name` untuk mengisi teks pesan. Menambahkan `ScaffoldMessenger.of(context).hideCurrentSnackBar()` memastikan bahwa `Snackbar` sebelumnya disembunyikan sebelum yang baru muncul, sehingga hanya satu `Snackbar` yang tampil pada satu waktu, menciptakan pengalaman pengguna yang lebih rapi.
+
+## TUGAS 8
+
+- Apa kegunaan `const` di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?
+
+    `const` di Flutter digunakan untuk mendeklarasikan variabel sebagai *immutable*, yaitu nilainya tidak bisa diubah setelah didefinisikan dan juga sebagai *compile-time constant* yang berarti nilainya sudah ditentukan sebelum program berjalan. Ada beberapa aturan `const`, yaitu nilainya tidak bisa diubah, perlu diberi nilai saat dideklarasikan, dan tidak boleh menggunakan nilai dinamis seperti `DateTime.now()`. Jika aturan ini dilanggar, kode akan error saat kompilasi. Dengan menggunakan `const`, Flutter dapat menghemat memori dan meningkatkan performa karena objek `const` tidak perlu dibuat ulang saat UI di-render. Berikut keuntungan menggunakan const:
+
+    - Performa Lebih Cepat: Flutter tidak perlu membuat ulang objek `const`, sehingga UI lebih responsif.
+    - Penghematan Memori: Objek `const` disimpan sekali dan dibagikan di seluruh aplikasi.
+    - Kode Lebih Stabil: Nilai `const` tidak bisa diubah secara tidak sengaja sehingga menjadi lebih aman.
+
+    Kapan sebaiknya kita menggunakan `const`? Kita dapat menggunakan `const` jika nilainya tidak akan berubah selama aplikasi berjalan, terutama untuk elemen UI statis seperti teks atau daftar yang tetap.
+
+    ```dart
+    const Text('Selamat datang di Floryn Shop!');
+    const List<String> categories = ['Single Flower', 'Bouquet', 'Wedding'];
+    ```
+
+    Kita dapat menghindari penggunaan `const` jika nilai atau *widget* mungkin berubah selama *runtime*, misalnya untuk nilai dinamis berikut:
+
+    ```dart
+    final DateTime now = DateTime.now();
+    ```
+    Nilai ini bergantung pada waktu saat program berjalan, sehingga tidak cocok menggunakan `const`.
+
+- Jelaskan dan bandingkan penggunaan *Column* dan *Row* pada Flutter. Berikan contoh implementasi dari masing-masing *layout widget* ini!
+
+    *Column* dan *Row* adalah dua *widget layout* yang digunakan dalam Flutter untuk menata elemen UI, tetapi dengan arah yang berbeda. Keduanya memungkinkan kita untuk menyusun *widget* seperti teks, gambar, atau tombol dengan fleksibilitas dalam penyusunannya. Berikut ini adalah perbedaan antara kedua *widget* tersebut:
+
+    - ***Column***: Menyusun elemen secara vertikal, dari atas ke bawah. *Widget* ini cocok jika kita ingin menampilkan elemen UI secara bertumpuk, misalnya untuk menampilkan judul, deskripsi, dan tombol di bawahnya. *Column* mendukung properti `mainAxisAlignment` untuk mengatur posisi elemen di sepanjang sumbu vertikal dan `crossAxisAlignment` untuk mengatur posisi di sumbu horizontal.
+    - ***Row***: Menyusun elemen secara horizontal, dari kiri ke kanan. *Row* sering digunakan untuk menampilkan elemen UI sejajar, seperti ikon atau tombol dalam satu baris. *Row* juga mendukung `mainAxisAlignment` untuk mengatur posisi elemen di sepanjang sumbu horizontal dan `crossAxisAlignment` untuk mengatur posisi elemen di sumbu vertikal.
+
+    Berikut contoh implementasi *Column* di Flutter yang digunakan untuk menampilkan teks sambutan dan daftar *item* secara vertikal.
+    ```dart
+    Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+            const Padding(
+            padding: EdgeInsets.only(top: 16.0),
+            child: Text(
+                'Welcome to Floryn Shop',
+                style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+                ),
+            ),
+            ),
+            GridView.count(
+            primary: true,
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            children: items.map((ItemHomepage item) {
+                return ItemCard(item);
+            }).toList(),
+            ),
+        ],
+    )
+    ```
+    -> *Column* digunakan untuk menyusun teks sambutan dan *grid item* secara vertikal.
+    -> `crossAxisAlignment.center` memastikan teks dan *grid* berada di tengah secara horizontal.
+
+    Berikut contoh implementasi *Row* yang digunakan untuk menampilkan beberapa informasi secara horizontal, seperti `NPM`, `Nama`, dan `Kelas`, dalam komponen *InfoCard*.
+    ```dart
+    Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+            InfoCard(title: 'NPM', content: npm),
+            InfoCard(title: 'Nama', content: nama),
+            InfoCard(title: 'Kelas', content: namaKelas),
+        ],
+    )
+    ```
+    -> *Row* digunakan untuk menampilkan *widget InfoCard* secara horizontal.
+    -> `mainAxisAlignment.spaceEvenly` memastikan setiap *card* memiliki jarak yang sama di antara mereka.
+
+    Dengan demikian, *Column* digunakan saat kita ingin menampilkan elemen secara vertikal, sementara *Row* cocok untuk menampilkan elemen secara horizontal. Kedua *widget* ini sangat berguna dalam mengatur tata letak elemen UI di Flutter, dengan dukungan properti tambahan seperti `mainAxisAlignment` dan `crossAxisAlignment` yang memberikan kontrol lebih untuk menyesuaikan posisi dan jarak antar elemen sesuai kebutuhan.
+
+- Sebutkan apa saja elemen input yang kamu gunakan pada halaman *form* yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+
+    Pada tugas kali ini, saya menerapkan beberapa elemen input untuk menerima berbagai data produk dari pengguna, termasuk `TextFormField`, `DropdownButtonFormField`, dan `ElevatedButton`. Setiap elemen input memiliki peran khusus dan dilengkapi dengan validator untuk memastikan data yang diinput valid.
+
+    - `TextFormField` digunakan pada beberapa *field* untuk menerima input teks atau angka:
+        - ***Name***: Menerima nama produk dengan validator yang memastikan input tidak kosong dan maksimal 255 karakter.
+        - ***Description***: Menerima deskripsi produk dan validator memastikan input tidak kosong serta tidak lebih dari 255 karakter.
+        - ***Amount***: *Field* untuk jumlah produk dalam bentuk angka, dilengkapi validator agar input tidak kosong, berupa angka, dan bernilai minimal 1.
+        - ***Price***: Menerima harga produk dalam bentuk angka dan validator memastikan input tidak kosong, berupa angka, serta bernilai minimal 0.
+        - ***Rating***: Menerima *rating* produk dengan nilai antara 1 hingga 5 serta validator memastikan input berupa angka dan berada dalam rentang yang benar.
+    - `DropdownButtonFormField` menyediakan pilihan ***product category*** dalam bentuk *dropdown* dengan validator yang memastikan kategori dipilih dan tidak kosong.
+    - `ElevatedButton` adalah tombol "*Save*" yang berfungsi untuk menyimpan data jika semua validasi terpenuhi. Tombol ini juga memunculkan `AlertDialog` sebagai konfirmasi bahwa data telah berhasil disimpan.
+
+    Selain elemen-elemen di atas, Flutter juga menyediakan elemen input lain yang belum digunakan dalam tugas ini. Beberapa di antaranya adalah sebagai berikut:
+    - `Checkbox`: Digunakan untuk memilih opsi ya/tidak, seperti meminta persetujuan pengguna terhadap syarat dan ketentuan.
+    - `Switch`: Mirip dengan `Checkbox`, tetapi berbentuk *toggle* untuk mengaktifkan atau menonaktifkan pilihan, misalnya menandai produk tersebut dapat dikembalikan atau tidak.
+    - `Radio`: Cocok untuk pilihan ideal untuk opsi yang hanya memungkinkan satu pilihan dalam satu kelompok, misalnya memilih jenis bunga (Mawar, Tulip, atau Anggrek) di mana hanya satu jenis bunga yang bisa dipilih.
+    - `Slider`: Mengatur nilai dalam rentang tertentu dengan menggeser, contohnya untuk mengatur jumlah bunga dalam *mixed arrangement*.
+    - `DatePicker`: Digunakan untuk memilih tanggal, cocok untuk input seperti tanggal pengiriman bunga.
+    - `TimePicker`: Digunakan untuk memilih waktu, cocok untuk pengaturan waktu pengantaran bunga.
+    - `TextField` dengan Tipe *Keyboard* Khusus: Input ini dapat disesuaikan dengan tipe *keyboard* tertentu, seperti *keyboard* untuk *email*, nomor telepon, atau kata sandi. Fungsinya adalah agar pengguna lebih mudah memasukkan jenis data tertentu dengan *keyboard* yang sesuai. Misalnya, *keyboard* untuk email memiliki tombol `@` dan `.com` yang memudahkan pengguna, sementara untuk nomor telepon hanya menampilkan angka. Elemen ini belum dibutuhkan dalam *form* saat ini.
+
+    Elemen-elemen tambahan ini belum diterapkan karena *form* saat ini hanya membutuhkan input dasar berupa teks dan angka. Namun, elemen-elemen tersebut dapat dipertimbangkan jika nantinya *form* memerlukan variasi input yang lebih kompleks atau kebutuhan input yang berbeda.
+
+- Bagaimana cara kamu mengatur tema (*theme*) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+
+    Iya, dalam implementasi proyek Floryn Shop, saya mengatur tema untuk menjaga tampilan aplikasi tetap konsisten menggunakan `ThemeData` di dalam `MaterialApp`. Dengan tema ini, saya dapat mengatur warna *primary* dan *secondary* untuk memastikan semua elemen UI memiliki gaya warna yang sama. Pengaturan tema ini diterapkan di `main.dart` sebagai berikut:
+
+    ```dart
+    theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.pink,
+        ).copyWith(secondary: Colors.pink[200]),
+    ),
+    ```
+
+    #### Penerapan Tema di Proyek:
+    - **Warna Utama (*Primary*)**: `primarySwatch` diatur ke `Colors.pink` yang secara otomatis akan menerapkan warna utama pada elemen seperti `AppBar` dan lainnya.
+        - ***AppBar***: Menggunakan `backgroundColor: Theme.of(context).colorScheme.primary` agar `AppBar` konsisten dengan warna utama.
+        - ***Drawer***: Bagian atas `DrawerHeader` diatur dengan menggunakan `color: Theme.of(context).colorScheme.primary` supaya dapat menjaga tampilan yang konsisten di seluruh halaman.
+        - ***Widget* Lain**: Tombol atau elemen teks juga menggunakan `Theme.of(context).colorScheme.primary` untuk merujuk ke warna utama.
+    
+    - **Warna Sekunder (*Secondary*)**: Dengan `copyWith`, warna sekunder diatur menjadi `Colors.pink[200]` yang digunakan untuk menjaga konsistensi di elemen-elemen lain.
+        - ***Snackbar***: Ketika tombol pada *ItemCard* ditekan, *Snackbar* akan menampilkan notifikasi dengan `backgroundColor: Theme.of(context).colorScheme.secondary`.
+        - ***Card* dan *Button***: Warna sekunder diterapkan sebagai latar belakang untuk beberapa *widget* agar terlihat kontras namun tetap serasi dengan warna utama.
+
+    Dengan pengaturan tema ini, Floryn Shop menjaga tampilan yang serasi di seluruh komponen UI, membuat aplikasi tampak rapi dan konsisten.
+
+- Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+
+    Dalam implementasi proyek Floryn Shop, saya menangani navigasi antar halaman menggunakan `Navigator` di Flutter yang berfungsi sebagai *stack* untuk menambah dan menghapus halaman. Untuk memudahkan navigasi, saya juga menggunakan *widget* `Drawer` yang berisi beberapa `ListTile` sebagai menu navigasi ke berbagai halaman dalam aplikasi, seperti halaman utama dan halaman tambah produk.
+
+    Beberapa metode yang saya gunakan dalam `Navigator` antara lain:
+    - `Navigator.push`: Menambahkan halaman baru di atas halaman yang sedang aktif. `Navigator.push` menerima *context* dan *route* sebagai parameter, di mana *route* menunjukkan halaman baru yang ingin ditampilkan.
+    - `Navigator.pop`: Menghapus halaman teratas dari *stack*, sehingga pengguna kembali ke halaman sebelumnya, biasanya digunakan saat proses di halaman tertentu selesai.
+
+    Sebagai contoh, berikut implementasi pada `left_drawer.dart`:
+    ```dart
+    ListTile(
+        leading: const Icon(Icons.home_outlined),
+        title: const Text('Halaman Utama'),
+        onTap: () {
+        Navigator.pop(context); // Menutup drawer terlebih dahulu
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+            builder: (context) => MyHomePage(),
+            ),
+        );
+        },
+    ),
+    ListTile(
+        leading: const Icon(Icons.production_quantity_limits),
+        title: const Text('Tambah Produk'),
+        onTap: () {
+        Navigator.pop(context); // Menutup drawer terlebih dahulu
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) => ProductFormPage(),
+            ),
+        );
+        },
+    ),
+    ```
+    Pada implementasi kode di atas:
+    - `Navigator.pop(context)`; digunakan untuk menutup *drawer* sebelum melakukan navigasi ke halaman baru. Langkah ini dilakukan untuk menjaga agar tampilan aplikasi tetap rapi dan memastikan *drawer* tidak tetap terbuka saat halaman baru ditampilkan.
+    - `Navigator.pushReplacement`; digunakan pada `ListTile` pertama (Halaman Utama) untuk mengganti halaman saat ini dengan `MyHomePage`, sehingga pengguna tidak dapat kembali ke halaman sebelumnya.
+    - `Navigator.push`; digunakan pada `ListTile` kedua (Tambah Produk) untuk menambahkan `ProductFormPage` ke *stack* dan memungkinkan pengguna kembali ke halaman sebelumnya dengan tombol *back* atau *gesture* navigasi.
+
+    Dengan pendekatan ini, navigasi di Floryn Shop menjadi lebih terstruktur dan mudah diakses serta memastikan pengguna dapat berpindah halaman dengan mulus sesuai kebutuhan.
+
+    *Note*: Dalam soal, halaman disebut sebagai `Tambah Item`, namun di kode saya halaman ini ditampilkan sebagai `Tambah Produk`. Penamaan `Tambah Produk` dipilih untuk lebih mencerminkan konteks aplikasi Floryn Shop yang berfokus pada pengelolaan produk toko bunga.
