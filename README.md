@@ -258,7 +258,8 @@
     ),
     ```
 
-    #### Penerapan Tema di Proyek:
+    **Penerapan Tema di Proyek:**
+    
     - **Warna Utama (*Primary*)**: `primarySwatch` diatur ke `Colors.pink` yang secara otomatis akan menerapkan warna utama pada elemen seperti `AppBar` dan lainnya.
         - ***AppBar***: Menggunakan `backgroundColor: Theme.of(context).colorScheme.primary` agar `AppBar` konsisten dengan warna utama.
         - ***Drawer***: Bagian atas `DrawerHeader` diatur dengan menggunakan `color: Theme.of(context).colorScheme.primary` supaya dapat menjaga tampilan yang konsisten di seluruh halaman.
