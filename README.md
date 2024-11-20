@@ -373,4 +373,69 @@
 
     1. Membuat django app bernama *authentication* dengan menjalankan `py manage.py startapp authentication`
     2. Menambahkan *authentication* ke `INSTALLED_APPS` di `settings.py`
-    3. 
+    3. *Install* `corsheaders` dan menambahkannya pada `MIDDLEWARE`. Kemudian, menambahkan beberapa `variabel cors` pada `settings.py`
+    4. Mengimplementasikan fitur registrasi akun pada proyek tugas Flutter.
+    - Halaman Registrasi:
+        Membuat formulir pendaftaran di halaman register dengan input untuk username, password, dan konfirmasi password.
+        Menambahkan validasi sederhana agar input tidak kosong dan memastikan password cocok dengan konfirmasi password.
+        Ketika tombol "Register" ditekan, data formulir dikirim dalam format JSON menggunakan CookieRequest melalui metode POST ke endpoint /auth/register/ di Django.
+    - Proses Backend di Django:
+        Fungsi register() memeriksa validitas data yang dikirimkan, memastikan bahwa password cocok dan username belum digunakan.
+        Jika validasi berhasil, Django membuat akun baru menggunakan User.objects.create_user() dan mengembalikan respons sukses ke Flutter dengan status 200.
+    - Flutter:
+        Setelah menerima respons sukses, Flutter menampilkan notifikasi menggunakan SnackBar.
+        Pengguna diarahkan ke halaman login menggunakan Navigator.pushReplacement().
+    5. Membuat halaman login pada proyek tugas Flutter.
+    - Halaman Login:
+        Membuat halaman login dengan dua input, yaitu username dan password.
+        Ketika tombol "Login" ditekan, data dikirim dalam format JSON menggunakan CookieRequest ke endpoint /auth/login/ di Django.
+    - Proses Backend di Django:
+        Django memverifikasi data menggunakan fungsi authenticate() untuk mencocokkan username dan password.
+        Jika valid, Django membuat sesi pengguna dengan auth_login() dan mengirimkan cookie sesi ke Flutter.
+    - Flutter:
+        Jika login berhasil, Flutter menyimpan cookie sesi dan menampilkan pesan sukses menggunakan SnackBar.
+        Aplikasi mengarahkan pengguna ke halaman utama (MyHomePage). Jika gagal, menampilkan pesan error menggunakan AlertDialog.
+    6. Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+    - Penggunaan Library:
+        Menggunakan library pbp_django_auth di Flutter untuk mempermudah autentikasi berbasis cookie.
+        CookieRequest memungkinkan Flutter menyimpan cookie sesi yang diterima dari Django dan secara otomatis menyertakannya pada setiap request berikutnya.
+    - Penerapan Global:
+        Membagikan instance CookieRequest secara global menggunakan Provider, sehingga semua komponen di aplikasi Flutter dapat mengakses sesi pengguna tanpa harus membuat instance baru.
+    7. Membuat model kustom sesuai dengan proyek aplikasi Django.
+    - Proses Pembuatan Model:
+
+        a. Mengambil contoh JSON dari endpoint Django yang mengembalikan daftar produk.
+
+        b. Menggunakan QuickType untuk mengonversi respons JSON menjadi model Dart yang berisi atribut produk seperti name, price, dan description.
+
+        c. Model yang dihasilkan dapat langsung digunakan di Flutter untuk mempermudah manipulasi data.
+    8. Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy.
+    - Pengambilan Data
+
+        a. Menggunakan metode fetchProduct() untuk mengambil data dari endpoint /json/ melalui CookieRequest dengan metode GET.
+
+        b. Data JSON yang diterima diubah menjadi daftar objek Product menggunakan metode fromJson().
+    - Menampilkan Daftar
+
+        a. Jika data belum diterima, menampilkan CircularProgressIndicator sebagai indikator loading.
+
+        b. Jika data tersedia, menggunakan ListView.builder untuk menampilkan daftar produk. Setiap item produk ditampilkan dengan atribut seperti name, price, dan description.
+    9. Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+    - Navigasi ke Detail
+
+        Ketika salah satu item pada daftar produk ditekan, pengguna diarahkan ke halaman detail produk menggunakan Navigator.push(), dengan mengirim data produk sebagai argumen.
+    - Menampilkan Detail
+
+    Di halaman detail, menampilkan semua atribut produk seperti name, price, description, category, amount, dan rating secara terstruktur.
+    - Navigasi Kembali
+
+    Menambahkan tombol "Back" untuk kembali ke halaman daftar produk dengan fungsi Navigator.pop().
+    10. Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login.
+    - Proses di Django:
+
+        a. Memodifikasi endpoint di Django untuk hanya mengembalikan item yang terkait dengan pengguna login menggunakan filter query berbasis request.user.
+    - Proses di Flutter:
+
+        a. Mengambil data dari endpoint yang sudah difilter menggunakan CookieRequest.
+
+        b. Menampilkan daftar produk di Flutter hanya untuk pengguna yang login.
