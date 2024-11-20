@@ -320,3 +320,57 @@
 ## TUGAS 9
 
 - Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+
+    Model sangat penting dalam Flutter untuk melakukan CRUD pada data JSON, karena memungkinkan data dihubungkan ke dalam struktur yang konsisten dan mudah diakses. Dengan memanfaatkan model, pengolahan data menjadi lebih terorganisir menggunakan metode seperti `fromJson` dan `toJson`, yang membantu parsing dan serialisasi data secara efisien. Selain itu, model membantu validasi data, memastikan setiap atribut memiliki format dan tipe yang sesuai dengan kebutuhan aplikasi, sehingga meningkatkan keamanan dan kestabilan.
+
+    Tanpa model, data JSON bisa sulit diolah, terutama dalam aplikasi yang kompleks, karena struktur data yang tidak terdefinisi dengan baik rentan menyebabkan kesalahan *runtime*. Dengan dukungan *library* seperti `json_serializable`, pembuatan model di Flutter menjadi lebih sederhana dan efisien. Model juga mempermudah integrasi dengan *widget* dan *state *management* seperti `Provider` yang menjaga konsistensi data yang ditampilkan di UI. Oleh karena itu, model menjadi komponen kunci untuk memastikan pengelolaan data pada aplikasi Flutter berjalan dengan lancar.
+
+-  Jelaskan fungsi dari *library http* yang sudah kamu implementasikan pada tugas ini
+
+    *Library http* yang diimplementasikan dalam tugas ini memiliki peran penting untuk menghubungkan aplikasi dengan server menggunakan protokol HTTP. Fungsinya adalah memungkinkan aplikasi untuk mengirimkan permintaan seperti `GET` untuk memperoleh data atau `POST` untuk mengirimkan data ke server. Selain itu, *library* ini juga menangani respon yang diterima dari server, umumnya dalam format `JSON`, untuk diproses lebih lanjut. Dengan adanya HTTP, integrasi API menjadi lebih sederhana, sehingga aplikasi dapat berkomunikasi dengan server secara dinamis dan mendukung pengolahan data secara *real-time*.
+
+- Jelaskan fungsi dari `CookieRequest` dan jelaskan mengapa *instance* `CookieRequest` perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+    Pada Flutter, `CookieRequest` adalah sebuah objek yang berfungsi untuk mengelola sesi autentikasi dan menyimpan informasi *cookie* dari server dalam aplikasi. Dengan menggunakan `CookieRequest`, aplikasi dapat melakukan permintaan HTTP seperti `GET` dan `POST` dengan menyertakan *cookie*. Hal ini memastikan bahwa sesi pengguna tetap aktif, sehingga pengguna tidak perlu *login* berulang kali selama menggunakan aplikasi.
+
+    Fitur utama `CookieRequest` antara lain:
+    - *Session Authentication*: Menyimpan dan mengelola informasi sesi pengguna yang diperoleh dari *cookie*.
+    - Pengiriman Otomatis *Cookie*: Menyertakan *cookie* secara otomatis dalam setiap permintaan HTTP ke server, memastikan autentikasi berjalan lancar.
+    - Mendukung Permintaan HTTP yang Memerlukan Autentikasi: Digunakan untuk mengakses data atau layanan yang hanya tersedia bagi pengguna yang sudah *login*.
+
+    Membagikan *instance* `CookieRequest` penting untuk menjaga konsistensi autentikasi dan sesi di seluruh aplikasi, sehingga semua komponen dapat mengakses informasi sesi yang sama tanpa perlu membuat ulang objek. Hal ini meningkatkan efisiensi, memudahkan integrasi antar-komponen seperti *login* dan *dashboard*, serta memungkinkan permintaan HTTP dengan autentikasi dilakukan dari mana saja. Dengan *state management* seperti `Provider`, `CookieRequest` berperan penting dalam pengelolaan sesi pengguna secara konsisten.
+
+-  Jelaskan mekanisme pengiriman data mulai dari *input* hingga dapat ditampilkan pada Flutter.
+
+    1. *Input* Data dari Pengguna: Pengguna memasukkan data melalui *widget input* seperti `TextField` atau `Form`. *Widget* ini berfungsi untuk mengumpulkan data yang akan digunakan dalam aplikasi.
+    2. Pengiriman Data ke Server: Data yang sudah dikumpulkan diubah menjadi format tertentu, misalnya `JSON`. Kemudian dikirim ke *server* melalui protokol HTTP. Biasanya, pengiriman ini menggunakan *library* seperti `http` atau `CookieRequest` untuk memasukkan data dalam permintaan `POST`.
+    3. Pemrosesan Data di Server: Server menerima data yang dikirim oleh aplikasi dan memprosesnya sesuai dengan aturan atau fungsi yang sudah dibuat. Server dapat menyimpan data ke *database* atau menjalankan operasi tertentu, kemudian mengirimkan respons berupa data yang diperbarui atau status proses yang dilakukan.
+    4. Penerimaan Respons: Aplikasi Flutter menerima respons dari *server* dan memprosesnya dengan mengubah data menjadi model atau objek yang sesuai. Hal ini memastikan data yang diterima memiliki struktur yang konsisten dan mudah digunakan di dalam aplikasi.
+    5. Menampilkan Data kepada Pengguna: Objek data yang telah diproses diteruskan ke *widget* untuk ditampilkan pada UI pengguna, seperti menggunakan `ListView`. Flutter secara otomatis memperbarui tampilan ketika ada perubahan data, sehingga pengguna dapat melihat hasil *input* atau data yang telah diproses oleh *server* secara langsung.
+
+- Jelaskan mekanisme autentikasi dari *login*, *register*, hingga *logout*. Mulai dari *input data* akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+    1. *Login*
+    - Masukkan Data *Login*: Pengguna mengisi formulir *login* di Flutter dengan *username* dan *password*.
+    - Kirim Permintaan *Login*: Flutter mengirim permintaan `POST` ke *endpoint* Django `/auth/login/` dengan data *login* berupa *username* dan *password*.
+    - Validasi di *Server*: Django memverifikasi apakah *username* dan *password* yang dikirim cocok dengan data di *database*. Jika valid, Django membuat sesi pengguna dan mengirimkan *cookie* sesi kembali ke Flutter.
+    - Simpan *Cookie* di Flutter: Flutter menggunakan `CookieRequest` untuk menyimpan *cookie* sesi dari Django. *Cookie* ini digunakan untuk melakukan permintaan terautentikasi di masa mendatang.
+    - Pindah ke Halaman Beranda: Jika *login* berhasil, Flutter menampilkan pesan sukses dan membawa pengguna ke halaman utama (misalnya `MyHomePage`). Jika *login* gagal, Flutter menampilkan pesan *error*.
+
+    2. *Register*
+    - Isi Data Registrasi: Pengguna mengisi formulir pendaftaran di Flutter dengan *username*, *password*, dan konfirmasi *password*.
+    - Kirim Permintaan *Register*: Flutter mengirim permintaan `POST` ke *endpoint* Django `/auth/register/` dengan data *username* dan *password*.
+    - Validasi di *Server*: Django memeriksa apakah *username* sudah terdaftar di *database* dan memastikan *password valid*. Jika validasi berhasil, Django membuat akun baru dan mengirimkan respons sukses ke Flutter.
+    - Pindah ke Halaman *Login*: Setelah proses pendaftaran selesai, Flutter menampilkan pesan sukses dan mengarahkan pengguna ke halaman *login* agar pengguna bisa masuk dengan akun baru mereka.
+
+    3. *Logout*
+    - Kirim Permintaan *Logout*: Saat pengguna menekan tombol *logout*, Flutter mengirim permintaan `POST` ke *endpoint* Django `/auth/logout/`.
+    - Hapus Sesi di Server: Django menghapus sesi pengguna di server dan menghilangkan *cookie* sesi terkait, menandakan bahwa pengguna telah keluar dari akun mereka.
+    - Hapus *Cookie* di Flutter: Flutter juga menghapus *cookie* sesi yang tersimpan di aplikasi, sehingga pengguna tidak bisa melakukan permintaan terautentikasi lagi tanpa *login* ulang.
+    - Pindah ke Halaman Login: Setelah *logout* berhasil, Flutter menampilkan pesan sukses dan membawa pengguna kembali ke halaman *login*.
+
+- Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step*! (bukan hanya sekadar mengikuti tutorial).
+
+    1. Membuat django app bernama *authentication* dengan menjalankan `py manage.py startapp authentication`
+    2. Menambahkan *authentication* ke `INSTALLED_APPS` di `settings.py`
+    3. 
