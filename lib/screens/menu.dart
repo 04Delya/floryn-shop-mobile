@@ -10,7 +10,7 @@ class MyHomePage extends StatelessWidget {
 
   final List<ItemHomepage> items = [
       ItemHomepage("Lihat Daftar Produk", Icons.production_quantity_limits_sharp),
-      ItemHomepage("Tambah Produk", Icons.add),
+      ItemHomepage("Tambah Produk", Icons.add_shopping_cart),
       ItemHomepage("Logout", Icons.logout),
   ];
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:floryn_shop/screens/list_product.dart';
 import 'package:floryn_shop/screens/menu.dart'; 
 import 'package:floryn_shop/screens/product_form.dart';
 
@@ -52,7 +53,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.production_quantity_limits),
+            leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Tambah Produk'),
             // Bagian redirection ke ProductFormPage
             onTap: () {
@@ -62,6 +63,18 @@ class LeftDrawer extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => const ProductFormPage(),
                 ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.list),
+            title: const Text('Daftar Product'),
+            onTap: () {
+              Navigator.pop(context);
+              // Route menu ke halaman mood
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductPage()),
               );
             },
           ),

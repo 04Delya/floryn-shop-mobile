@@ -316,3 +316,7 @@
     Dengan pendekatan ini, navigasi di Floryn Shop menjadi lebih terstruktur dan mudah diakses serta memastikan pengguna dapat berpindah halaman dengan mulus sesuai kebutuhan.
 
     *Note*: Dalam soal, halaman disebut sebagai `Tambah Item`, namun di kode saya halaman ini ditampilkan sebagai `Tambah Produk`. Penamaan `Tambah Produk` dipilih untuk lebih mencerminkan konteks aplikasi Floryn Shop yang berfokus pada pengelolaan produk toko bunga.
+
+## TUGAS 9
+
+- Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
