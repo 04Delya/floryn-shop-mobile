@@ -426,10 +426,10 @@
         Ketika salah satu item pada daftar produk ditekan, pengguna diarahkan ke halaman detail produk menggunakan Navigator.push(), dengan mengirim data produk sebagai argumen.
     - Menampilkan Detail
 
-    Di halaman detail, menampilkan semua atribut produk seperti name, price, description, category, amount, dan rating secara terstruktur.
+        Di halaman detail, menampilkan semua atribut produk seperti name, price, description, category, amount, dan rating secara terstruktur.
     - Navigasi Kembali
 
-    Menambahkan tombol "Back" untuk kembali ke halaman daftar produk dengan fungsi Navigator.pop().
+        Menambahkan tombol "Back" untuk kembali ke halaman daftar produk dengan fungsi Navigator.pop().
     10. Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login.
     - Proses di Django:
 
